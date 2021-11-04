@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Starfield</title>  
+    </head> 
+    <style>
+        #container {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            left: 0px;
+            top: 0px;
+        }
+    </style>
+    <body>
+        <div id="container"></div>
+        <script src="starfield.js"></script>
+        <script>
+            var container = document.getElementById('container');
+            var starfield = new Starfield();
+            starfield.initialise(container);
+            starfield.start();
+        </script>
+    </body>
+</html>  
