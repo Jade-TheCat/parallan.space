@@ -3,8 +3,8 @@ function Starfield() {
     this.canvas = null;
     this.width = 0;
     this.height = 0;
-    this.minVelocity = 15;
-    this.maxVelocity = 30;
+    this.minVelocity = 50;
+    this.maxVelocity = 55;
     this.stars = 100;
     this.intervalId = 0;
 }
@@ -59,8 +59,11 @@ Starfield.prototype.update = function() {
     var dt = 1 / this.fps;
     for (var i=0; i<this.stars.length; i++) {
         var star = this.stars[i];
-        star.x += dt * star.velocity * star.direction[0];
-        star.y += dt * star.velocity * star.direction[1];
+        var middle_x = this.width/2
+        var middle_y = this.height/2
+        var dist = Math.sqrt(Math.pow(star.x - middle_x, 2) + Math.pow(star.y - middle_y, 2));
+        star.x += dt * (star.velocity + dist) * star.direction[0];
+        star.y += dt * (star.velocity + dist) * star.direction[1];
         if (star.y > this.height || star.y < 0 || star.x < 0 || star.x > this.width) {
             var x = Math.random() * (((this.width/2)+2) - ((this.width/2)-2)) + ((this.width/2)-2)
             var y = Math.random() * (((this.height/2)+2) - ((this.height/2)-2)) + ((this.height/2)-2)
