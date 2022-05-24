@@ -13,7 +13,6 @@
     border-radius: 5px;
     padding: 10px;
     color:white;
-    font-family: Parallan;
 }
 * {
     font-variant-ligatures: normal;
@@ -38,4 +37,5 @@
     writing-mode: vertical-lr;
     text-orientation: sideways;
     font-size: 20pt;
+    font-family: Parallan;
 }
