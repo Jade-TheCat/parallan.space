@@ -1,11 +1,11 @@
 function Starfield() {
-    this.fps = 30;
+    this.fps = 60;
     this.canvas = null;
     this.width = 0;
     this.height = 0;
-    this.minVelocity = 50;
-    this.maxVelocity = 55;
-    this.stars = 100;
+    this.minVelocity = 0.5;
+    this.maxVelocity = 1;
+    this.stars = 200;
     this.intervalId = 0;
 }
 
@@ -42,10 +42,12 @@ Starfield.prototype.start = function() {
     for (var i=0; i<this.stars; i++) {
         var x = Math.random()*this.width;
         var y = Math.random()*this.height;
+        var direction_rad = Math.atan2(y - (this.height/2), x - (this.width/2));
+        var direction_vec = [Math.cos(direction_rad), Math.sin(direction_rad)];
         stars[i] = new Star(x, 
             y, Math.random()*3+1,
             (Math.random()*(this.maxVelocity - this.minVelocity))+this.minVelocity,
-            [Math.random()*(x > (this.width/2) ? 1 : -1), Math.random()*(y > (this.height/2) ? 1 : -1)]);
+            direction_vec);
     }
     this.stars = stars;
     var self = this;
@@ -62,15 +64,17 @@ Starfield.prototype.update = function() {
         var middle_x = this.width/2
         var middle_y = this.height/2
         var dist = Math.sqrt(Math.pow(star.x - middle_x, 2) + Math.pow(star.y - middle_y, 2));
-        star.x += dt * (star.velocity + dist) * star.direction[0];
-        star.y += dt * (star.velocity + dist) * star.direction[1];
+        star.x += dt * (star.velocity * (dist/2)) * star.direction[0];
+        star.y += dt * (star.velocity * (dist/2)) * star.direction[1];
         if (star.y > this.height || star.y < 0 || star.x < 0 || star.x > this.width) {
-            var x = Math.random() * (((this.width/2)+2) - ((this.width/2)-2)) + ((this.width/2)-2)
-            var y = Math.random() * (((this.height/2)+2) - ((this.height/2)-2)) + ((this.height/2)-2)
+            var x = getRandomArbitrary((this.width/2)-(this.width/10), (this.width/2)+(this.width/10))
+            var y = getRandomArbitrary((this.height/2)-(this.height/10), (this.height/2)+(this.height/10))
+            var direction_rad = Math.atan2(y - (this.height/2), x - (this.width/2));
+            var direction_vec = [Math.cos(direction_rad), Math.sin(direction_rad)];
             this.stars[i] = new Star(x, y,
                 Math.random()*3+1,
                 (Math.random()*(this.maxVelocity - this.minVelocity))+this.minVelocity,
-                [Math.random()*(x > (this.width/2) ? 1 : -1), Math.random()*(y > (this.height/2) ? 1 : -1)]);
+                direction_vec);
         }
     }
 }
@@ -85,3 +89,7 @@ Starfield.prototype.draw = function() {
         ctx.fillRect(star.x, star.y, star.size, star.size);
     }
 };
+
+function getRandomArbitrary(min, max) {
+    return Math.random() * (max-min)+min;
+}

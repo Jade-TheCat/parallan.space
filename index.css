@@ -1,0 +1,41 @@
+@font-face {
+    font-family: Parallan;
+    src: url(Parallan.ttf);
+}
+
+#floater {
+    height: 60vh;
+    width: 60vw;
+    background-color: rgb(109, 109, 109);
+    position:absolute;
+    right: 20vw;
+    top: 25vh;
+    border-radius: 5px;
+    padding: 10px;
+    color:white;
+    font-family: Parallan;
+}
+* {
+    font-variant-ligatures: normal;
+}
+#header {
+    position:absolute;
+    height: 10vh;
+    width: 50vw;
+    left: 25vw;
+    top: 15vh;
+    color: white;
+    text-align: center;
+    line-height: 10vh;
+}
+
+#header h1 {
+    text-align: center;
+    margin: 0;
+}
+
+.parallan_text {
+    writing-mode: vertical-lr;
+    text-orientation: sideways;
+    font-size: 20pt;
+}
